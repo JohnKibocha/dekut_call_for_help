@@ -1,0 +1,67 @@
+
+
+## Drawable Resources Naming Conventions
+When naming custom drawables, use the following naming conventions:
+1. Use lowercase letters.
+2. Separate words with an underscore.
+3. Use the following format: `type_description_optionalState` e.g. `btn_submit_disabled`
+4. Use the following types:
+    - `btn` for buttons
+    - `ic` for icons
+    - `bg` for backgrounds
+    - `divider` for dividers
+    - `selector` for selectors
+    - `shape` for shapes
+    - `state` for states
+    - `list` for list items
+    - `tab` for tabs
+    - `indicator` for indicators
+    - `progress` for progress bars
+    - `dialog` for dialogs
+    - `popup` for popups
+    - `menu` for menus
+    - `card` for cards
+    - `chip` for chips
+    - `avatar` for avatars
+    - `badge` for badges
+    - `indicator` for indicators
+    - `switch` for switches
+    - `checkbox` for checkboxes
+    - `radio` for radio buttons
+    - `edittext` for edit texts
+    - `spinner` for spinners
+    - `slider` for sliders
+    - `seekbar` for seekbars
+    - `ratingbar` for rating bars
+    - `progressbar` for progress bars
+    - `calendar` for calendars
+    - `datepicker` for date pickers
+    - `timepicker` for time pickers
+    - `search` for search views
+    - `toolbar` for toolbars
+    - `navigation` for navigation views
+    - `bottomnavigation` for bottom navigation views
+    -  `bottomsheet` for bottom sheets
+    - `navigationdrawer` for navigation drawers
+    - `appbar` for app bars
+    - `tablayout` for tab layouts
+    - `viewpager` for view pagers
+    - `recyclerview` for recycler views
+    - `listview` for list views
+    - `gridview` for grid views
+    - `scrollview` for scroll views
+    - `nestedscrollview` for nested scroll views
+    - `webview` for web views
+    - `imageview` for image views
+    - `textview` for text views
+    - `button` for buttons
+    - `edittext` for edit texts
+    - `checkbox` for checkboxes
+    - `radiobutton` for radio buttons
+    - `switch` for switches
+    - `spinner` for spinners
+    - `progressbar` for progress bars
+    - `seek` for seek bars
+    - `rating` for rating bars
+    - `calendar` for calendars
+    - `datepicker` for date pickers

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base TextField Style -->
+    <style name="Widget.App.TextField.Base" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="boxBackgroundColor">?attr/colorSurface</item>
+        <item name="boxStrokeColor">?attr/colorOnSurface</item>
+        <item name="hintTextColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <!-- TextField Style -->
+    <style name="Widget.App.TextField" parent="Widget.App.TextField.Base">
+        <!-- Additional customisations if needed -->
+    </style>
+
+    <!-- Dropdown TextField Style -->
+    <style name="Widget.App.TextField.Dropdown" parent="Widget.App.TextField.Base">
+        <item name="endIconMode">dropdown_menu</item>
+        <item name="endIconDrawable">@drawable/ic_dropdown</item>
+        <item name="endIconTint">@color/black</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <!-- TextField with Counter Style -->
+    <style name="Widget.App.TextField.Counter" parent="Widget.App.TextField.Base">
+        <item name="counterEnabled">true</item>
+        <item name="counterMaxLength">50</item>
+    </style>
+
+    <!-- TextField with Error Style -->
+    <style name="Widget.App.TextField.Error" parent="Widget.App.TextField.Base">
+        <item name="errorEnabled">true</item>
+    </style>
+
+    <!-- TextField with Leading Icon Style -->
+    <style name="Widget.App.TextField.LeadingIcon" parent="Widget.App.TextField.Base">
+        <item name="startIconDrawable">@drawable/ic_default</item>
+    </style>
+
+    <!-- TextField with Password Toggle Style -->
+    <style name="Widget.App.TextField.PasswordToggle" parent="Widget.App.TextField.Base">
+        <item name="endIconMode">password_toggle</item>
+    </style>
+
+    <!-- TextField with Ending Icon Style -->
+    <style name="Widget.App.TextField.EndingIcon" parent="Widget.App.TextField.Base">
+        <item name="endIconDrawable">@drawable/ic_default</item>
+        <item name="endIconContentDescription">@string/end_icon_content_description</item>
+    </style>
+
+    <!-- TextField with Prefix Style -->
+    <style name="Widget.App.TextField.Prefix" parent="Widget.App.TextField.Base">
+        <item name="prefixText">+254</item>
+    </style>
+
+    <string name="end_icon_content_description" />
+</resources>

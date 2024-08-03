@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179594934061",
+    "project_id": "dkut-call-for-help",
+    "storage_bucket": "dkut-call-for-help.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179594934061:android:a42992c1bf03ec80fe85a4",
+        "android_client_info": {
+          "package_name": "com.muriithi.dekutcallforhelp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAle2rbZ_2Lp78QY54wOA6hZsxOmecRLeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

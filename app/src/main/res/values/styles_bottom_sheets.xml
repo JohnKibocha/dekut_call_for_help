@@ -1,0 +1,23 @@
+<resources>
+    <!-- Bottom Sheet style -->
+    <style name="Widget.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <!-- Bottom Sheet properties -->
+    <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="behavior_peekHeight">56dp</item> <!-- Adjust as needed -->
+        <item name="behavior_hideable">true</item>
+        <item name="behavior_fitToContents">false</item>
+        <item name="behavior_halfExpandedRatio">0.5</item>
+        <item name="behavior_skipCollapsed">false</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.BottomSheet</item>
+        <item name="android:background">@drawable/bottomsheet_rounded</item>
+    </style>
+
+    <!-- Bottom Sheet shape appearance -->
+    <style name="ShapeAppearance.BottomSheet" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+</resources>

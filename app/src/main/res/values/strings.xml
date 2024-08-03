@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">CALL FOR HELP</string>
+    <string name="logo">Dekut Call For Help Logo</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_in">Log in with Email</string>
+    <string name="school_prompt">Select a School\n</string>
+    <string name="course_prompt">Select a Course</string>
+
+    <string-array name="select_school">
+        <item>School of Engineering</item>
+        <item>School of Computer Science</item>
+        <item>School of Nursing</item>
+        <item>School of Business</item>
+        <item>School of Education</item>
+        <item>School of Health Sciences</item>
+        <item>School of Agriculture</item>
+        <item>School of Pure and Applied Sciences</item>
+        <item>School of Hospitality and Tourism</item>
+        <item>School of Creative Arts and Technology</item>
+        <item>School of Graduate Studies</item>
+    </string-array>
+
+    <array name="courses_engineering">
+        <item>Civil Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Electrical Engineering</item>
+    </array>
+
+    <array name="courses_computer_science">
+        <item>Information Technology</item>
+        <item>Business Information Technology</item>
+        <item>Software Engineering</item>
+        <item>Computer Science</item>
+    </array>
+
+    <array name="courses_nursing">
+        <item>Nursing</item>
+    </array>
+
+    <array name="courses_business">
+        <item>Finance</item>
+        <item>Accounting</item>
+        <item>Procurement</item>
+        <item>Human Resource Management</item>
+    </array>
+
+    <array name="courses_education">
+        <item>Education</item>
+    </array>
+
+    <array name="courses_health_sciences">
+        <item>Health Sciences</item>
+    </array>
+
+    <array name="courses_agriculture">
+        <item>Agriculture</item>
+    </array>
+
+
+</resources>
