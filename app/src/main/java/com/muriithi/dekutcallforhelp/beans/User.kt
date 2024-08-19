@@ -11,8 +11,10 @@ class User {
     var school: String? = null
     var registrationNumber: String? = null
     var idNumber: Int? = null
-    var dateOfBirth: Date? = null
+    var dateOfBirth: String? = null
     var emailAddress: String? = null
     var phoneNumber: String? = null
-    var isSuperuser: Boolean = false
+    var profilePhoto: String? = null
+    var isSuperuser: Boolean = false // Default value
+    var countryCode: String = "254" // Default value
 }

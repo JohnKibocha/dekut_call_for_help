@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  inherit from styles.BaseButton  -->
+    <style name="Widget.App.Button.Tetiary" parent="Button.Base">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="strokeColor">@color/material_neutral_darker</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="cornerRadius">35dp</item>
+    </style>
+</resources>

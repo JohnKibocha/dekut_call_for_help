@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity">
 
-    <!--     Progress indicator      -->
+    <!-- Progress indicator -->
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_indicator"
-        style="@style/Widget.MyApp.LinearProgressIndicator"
+        style="@style/LinearProgressIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
@@ -21,80 +21,52 @@
 
     <!-- Logo at the center -->
     <ImageView
-        android:id="@+id/imageView_logo"
+        android:id="@+id/image_view_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/logo"
-        android:src="@drawable/bg_logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView_call_for_help"
+        android:src="@drawable/bg_filled_logo"
+        app:layout_constraintBottom_toTopOf="@+id/linear_layout_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <!-- Text below the logo -->
-    <TextView
-        android:id="@+id/textView_call_for_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto"
-        android:lineSpacingExtra="8sp"
-        android:text="@string/app_name"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_logo" />
 
-    <!-- Bottom Sheet -->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <!-- Buttons at the bottom -->
+    <LinearLayout
+        android:id="@+id/linear_layout_buttons"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_call_for_help">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <FrameLayout
-            android:id="@+id/standard_bottom_sheet"
+        <Button
+            android:id="@+id/button_create_account"
+            style="@style/Widget.App.Button.Primary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bottomsheet_rounded"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/create_account"
+            app:icon="@drawable/ic_filled_new_user"
+            app:iconTint="@color/white"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Create Account Button -->
-                <Button
-                    android:id="@+id/button_create_account"
-                    style="@style/Widget.MyApp.Button.Filled"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:drawableLeft="@drawable/ic_account"
-                    android:text="@string/create_account"
-                    tools:ignore="RtlHardcoded" />
-
-                <!-- Sign in with Email Button -->
-                <Button
-                    android:id="@+id/button_sign_in"
-                    style="@style/Widget.MyApp.Button.Outlined"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:drawableLeft="@drawable/ic_email"
-                    android:drawablePadding="0dp"
-                    android:text="@string/sign_in"
-                    tools:ignore="RtlHardcoded" />
-            </LinearLayout>
-
-        </FrameLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <Button
+            android:id="@+id/button_sign_in"
+            style="@style/Widget.App.Button.Tetiary"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="@string/sign_in"
+            app:icon="@drawable/ic_filled_email"
+            app:iconTint="@color/black"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
