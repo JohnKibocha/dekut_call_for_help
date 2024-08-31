@@ -1,3 +1,4 @@
+// app/src/main/java/com/muriithi/dekutcallforhelp/SignInActivity.kt
 package com.muriithi.dekutcallforhelp
 
 import android.annotation.SuppressLint
@@ -9,14 +10,12 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import com.muriithi.dekutcallforhelp.components.Formatter
 import com.muriithi.dekutcallforhelp.components.Validator
 import com.muriithi.dekutcallforhelp.data.FirebaseService
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var progressIndicator: LinearProgressIndicator
     private lateinit var firebaseService: FirebaseService
-    private lateinit var formatter: Formatter
     private lateinit var validator: Validator
 
     @SuppressLint("CutPasteId")
@@ -90,11 +89,13 @@ class SignInActivity : AppCompatActivity() {
             if (isAuthenticated) {
                 snackBar.setText("Signed in successfully")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
                 snackBar.setText("Sign in failed")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
             }
         }

@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
@@ -47,6 +46,8 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.messaging.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,8 +60,6 @@ dependencies {
     implementation(libs.material.v150alpha01)
     implementation(libs.picasso)
 
-    // Add the Image Cropper library
-    implementation(libs.android.image.cropper)
     // Add the Glide library
     implementation(libs.glide)
 }

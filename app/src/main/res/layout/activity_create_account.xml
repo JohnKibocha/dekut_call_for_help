@@ -58,13 +58,6 @@
                 style="@style/CircularProfilePhoto"
                 app:srcCompat="@drawable/ic_outlined_profile" />
 
-            <com.muriithi.dekutcallforhelp.views.CropImageView
-                android:id="@+id/crop_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:visibility="gone" />
-
             <!-- Form fields -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_field_first_name"

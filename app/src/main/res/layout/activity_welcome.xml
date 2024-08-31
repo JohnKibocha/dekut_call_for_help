@@ -64,6 +64,7 @@
             style="@style/Widget.App.Button.Tetiary"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginBottom="50dp"
             android:text="@string/sign_in"
             app:icon="@drawable/ic_filled_email"
             app:iconTint="@color/black"/>

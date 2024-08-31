@@ -1,10 +1,10 @@
+// app/src/main/java/com/muriithi/dekutcallforhelp/CreateAccountActivity.kt
 package com.muriithi.dekutcallforhelp
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.components.Component
 import com.muriithi.dekutcallforhelp.components.Formatter
@@ -90,8 +91,6 @@ class CreateAccountActivity : AppCompatActivity() {
             countryCodeDropdown.setText(defaultCountryCode, false)
         }
 
-        createDefaultSuperuserAccount()
-
         createAccountButton.setOnClickListener {
             createAccount()
         }
@@ -130,10 +129,12 @@ class CreateAccountActivity : AppCompatActivity() {
                 profileImageView.setImageURI(uri)
                 snackBar.setText("Profile photo uploaded successfully")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
             } else {
                 snackBar.setText("Failed to upload profile photo")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
             }
             createAccountButton.isEnabled = true
@@ -142,60 +143,6 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun createDefaultSuperuserAccount() {
-        val email = "muriithi.admin@dkut.ac.ke"
-        val password = "defaultPassword" // Use a secure password in production
-        val dateOfBirth = formatter.parseStringToDateObject("01-Jan-2000 10:14")
-        Log.w("CreateAccountActivity", "Date of birth: $dateOfBirth")
-
-        firebaseService.createAccount(email, password) { success ->
-            if (success) {
-                progressIndicator.visibility = View.VISIBLE
-                val user = auth.currentUser
-                val userId = user?.uid
-
-                if (userId != null) {
-                    val newUser = User().apply {
-                        this.userId = userId
-                        this.firstName = "Dennis"
-                        this.lastName = "Muriithi"
-                        this.course = "Not Applicable"
-                        this.school = "Not Applicable"
-                        this.registrationNumber = "A000-01-0000/0000"
-                        this.idNumber = 12345678
-                        this.dateOfBirth = formatter.formatDateToString(dateOfBirth)
-                        Log.w(
-                            "CreateAccountActivity",
-                            "Formatted date of birth: ${this.dateOfBirth}"
-                        )
-                        this.emailAddress = email
-                        this.phoneNumber = formatter.stripPhoneNumberFormatting("+254712345678")
-                        this.countryCode = "254"
-                        this.isSuperuser = true
-                    }
-                    firebaseService.writeData("users/$userId", newUser) { writeSuccess ->
-                        if (writeSuccess) {
-                            Log.d(
-                                "CreateAccountActivity",
-                                "Superuser account created successfully for userId: $userId"
-                            )
-                            progressIndicator.visibility = View.GONE
-                        } else {
-                            Log.e(
-                                "CreateAccountActivity",
-                                "Failed to create superuser account for userId: $userId"
-                            )
-                            progressIndicator.visibility = View.GONE
-                        }
-                    }
-                }
-            } else {
-                Log.e("CreateAccountActivity", "Failed to create default superuser account")
-                progressIndicator.visibility = View.GONE
-            }
-        }
-    }
 
     @SuppressLint("CutPasteId")
     private fun createAccount() {
@@ -381,7 +328,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         firebaseService.createAccount(formattedEmail, password) { success ->
             if (success) {
-                val user = auth.currentUser
+                var user = auth.currentUser
                 val userId = user?.uid
 
                 if (userId != null) {
@@ -395,8 +342,8 @@ class CreateAccountActivity : AppCompatActivity() {
                         this.idNumber = idNumber.toIntOrNull()
                         this.dateOfBirth = formatter.formatDateToString(dateOfBirth)
                         this.emailAddress = formattedEmail
-                        this.phoneNumber = formattedPhoneNumberWithCountryCode
-                        this.isSuperuser = false
+                        this.phoneNumber = formatter.stripPhoneNumberFormatting(formattedPhoneNumberWithCountryCode)
+                        this.superuser = false
                         this.countryCode = countryCode
                         this.profilePhoto = profileImageUrl
                     }
@@ -405,22 +352,48 @@ class CreateAccountActivity : AppCompatActivity() {
                         if (writeSuccess) {
                             snackBar.setText("Account created successfully")
                                 .setDuration(Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null)
                                 .show()
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         } else {
                             snackBar.setText("Failed to save user data to database")
                                 .setDuration(Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null)
                                 .show()
                             startActivity(Intent(this, WelcomeActivity::class.java))
                             finish()
                         }
                         progressIndicator.visibility = View.GONE
                     }
+
+                    user = FirebaseAuth.getInstance().currentUser
+
+                    // Check if the user object is not null
+                    user?.let {
+                        // check if display name is null
+                        if (user.displayName == null) {
+                            val profileUpdates = UserProfileChangeRequest.Builder()
+                                .setDisplayName("$formattedFirstName $formattedLastName")
+                                .build()
+
+                            user.updateProfile(profileUpdates)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(
+                                            this,
+                                            "${user.displayName} profile updated successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                        }
+                    }
                 }
             } else {
                 snackBar.setText("Failed to create account")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
                 progressIndicator.visibility = View.GONE
                 startActivity(Intent(this, WelcomeActivity::class.java))
