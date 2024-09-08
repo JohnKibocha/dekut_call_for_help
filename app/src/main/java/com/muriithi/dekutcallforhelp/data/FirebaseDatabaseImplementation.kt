@@ -1,4 +1,4 @@
-// app/src/main/java/com/muriithi/dekutcallforhelp/data/FirebaseDatabaseImpl.kt
+// app/src/main/java/com/muriithi/dekutcallforhelp/data/FirebaseDatabaseImplementation.kt
 package com.muriithi.dekutcallforhelp.data
 
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +13,7 @@ import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.components.Validator
 import com.muriithi.dekutcallforhelp.interfaces.FirebaseInterface
 
-class FirebaseDatabaseImpl : FirebaseInterface {
+class FirebaseDatabaseImplementation : FirebaseInterface {
     private val database = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val validator = Validator()
@@ -177,9 +177,9 @@ class FirebaseDatabaseImpl : FirebaseInterface {
     // HelpRequest management methods
     override fun createHelpRequest(helpRequest: HelpRequest, callback: (Boolean) -> Unit) {
         val node = "helpRequests/${helpRequest.requestId}"
-        helpRequest.phoneNumber = auth.currentUser?.phoneNumber ?: ""
         writeData(node, helpRequest, callback)
     }
+
 
     override fun getHelpRequestById(requestId: String, callback: (HelpRequest?) -> Unit) {
         val node = "helpRequests/$requestId"
@@ -280,18 +280,6 @@ class FirebaseDatabaseImpl : FirebaseInterface {
         writeData(node, notification, callback)
     }
 
-    override fun sendNotification(notification: Notification, callback: (Boolean) -> Unit) {
-        val ref = database.getReference("notifications")
-        val key = ref.push().key
-        if (key != null) {
-            notification.notificationId = key
-            ref.child(key).setValue(notification).addOnCompleteListener { task ->
-                callback(task.isSuccessful)
-            }
-        } else {
-            callback(false)
-        }
-    }
 
     override fun getNotificationById(notificationId: String, callback: (Notification?) -> Unit) {
         val node = "notifications/$notificationId"
@@ -329,5 +317,6 @@ class FirebaseDatabaseImpl : FirebaseInterface {
             callback(success)
         }
     }
+
 
 }

@@ -7,7 +7,7 @@ import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.interfaces.FirebaseInterface
 
 class FirebaseService : FirebaseInterface {
-    private val firebaseDatabase: FirebaseInterface = FirebaseDatabaseImpl()
+    private val firebaseDatabase: FirebaseInterface = FirebaseDatabaseImplementation()
 
     // Data manipulation methods
     override fun <T> readData(node: String, clazz: Class<T>, callback: (T?) -> Unit) {
@@ -120,6 +120,7 @@ class FirebaseService : FirebaseInterface {
         firebaseDatabase.createNotification(notification, callback)
     }
 
+
     override fun getNotificationById(notificationId: String, callback: (Notification?) -> Unit) {
         firebaseDatabase.getNotificationById(notificationId, callback)
     }
@@ -135,9 +136,4 @@ class FirebaseService : FirebaseInterface {
     override fun deleteNotification(notificationId: String, callback: (Boolean) -> Unit) {
         firebaseDatabase.deleteNotification(notificationId, callback)
     }
-
-    override fun sendNotification(notification: Notification, callback: (Boolean) -> Unit) {
-        firebaseDatabase.sendNotification(notification, callback)
-    }
-
 }

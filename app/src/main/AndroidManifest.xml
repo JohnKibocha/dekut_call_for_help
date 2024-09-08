@@ -6,7 +6,8 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+        tools:ignore="SelectedPhotoAccess" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,7 +29,21 @@
         android:theme="@style/Base.Theme.DekutCallForHelp"
         tools:targetApi="31" >
 
-        <receiver android:name=".AdminHomeFragment$RejectRequestReceiver"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_outline_uread_chat_bubble" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />
+
+
+
+        <!-- Receivers -->
+        <receiver android:name=".receivers.MarkAsReadReceiver" />
+        <receiver android:name=".receivers.ReviewReceiver" />
+        <receiver android:name=".receivers.RejectReceiver" />
         <activity
             android:name=".AdminReviewRequestActivity"
             android:exported="false" />
@@ -50,6 +65,15 @@
         <activity
             android:name=".SignInActivity"
             android:exported="true" />
+
+        <!-- Services -->
+        <service android:name=".services.PushNotificationService"
+            android:exported="true"
+            android:permission="com.google.firebase.MESSAGING_EVENT">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="preloaded_fonts"

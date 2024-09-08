@@ -4,6 +4,7 @@ package com.muriithi.dekutcallforhelp.beans
 data class HelpRequest(
     val requestId: String = "",
     val senderId: String = "",
+    var senderName : String = "",
     val receiverId: String = "",
     val requestDate: String = "",
     var requestStatus: RequestStatus = RequestStatus.PENDING,

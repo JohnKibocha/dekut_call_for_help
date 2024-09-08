@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity">
 
+    <!-- Top App Bar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_surface"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleCentered="true"
+        app:titleTextColor="@color/black" />
+
     <!-- Progress indicator -->
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_indicator"
@@ -14,26 +27,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginEnd="411dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_app_bar" />
 
     <!-- Logo at the center -->
     <ImageView
         android:id="@+id/image_view_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/logo"
         android:src="@drawable/bg_filled_logo"
         app:layout_constraintBottom_toTopOf="@+id/linear_layout_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_app_bar"
         app:layout_constraintVertical_chainStyle="packed" />
-
 
 
     <!-- Buttons at the bottom -->
@@ -57,7 +69,7 @@
             android:layout_marginBottom="16dp"
             android:text="@string/create_account"
             app:icon="@drawable/ic_filled_new_user"
-            app:iconTint="@color/white"/>
+            app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/button_sign_in"
@@ -67,7 +79,7 @@
             android:layout_marginBottom="50dp"
             android:text="@string/sign_in"
             app:icon="@drawable/ic_filled_email"
-            app:iconTint="@color/black"/>
+            app:iconTint="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

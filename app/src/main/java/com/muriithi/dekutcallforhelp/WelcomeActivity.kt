@@ -2,12 +2,19 @@
 package com.muriithi.dekutcallforhelp
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -20,7 +27,6 @@ import com.google.firebase.database.ValueEventListener
 import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.components.Formatter
 import com.muriithi.dekutcallforhelp.components.ImageUploader
-import com.muriithi.dekutcallforhelp.components.PermissionHandler
 import com.muriithi.dekutcallforhelp.data.FirebaseService
 
 class WelcomeActivity : AppCompatActivity() {
@@ -29,8 +35,20 @@ class WelcomeActivity : AppCompatActivity() {
     private val formatter = Formatter()
     private lateinit var auth: FirebaseAuth
     private lateinit var imageUploader: ImageUploader
-    private lateinit var permissionHandler: PermissionHandler
     private val database = FirebaseDatabase.getInstance()
+
+    // Define the permission request launcher
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                Log.d("AdminHomeFragment", "Notification permission granted")
+                // Send any pending notifications or proceed with your logic
+            } else {
+                Log.w("AdminHomeFragment", "Notification permission denied")
+                Toast.makeText(this, "Permission for notifications is required", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +63,9 @@ class WelcomeActivity : AppCompatActivity() {
         progressIndicator = findViewById(R.id.progress_indicator)
         auth = FirebaseAuth.getInstance()
         imageUploader = ImageUploader()
-        permissionHandler = PermissionHandler(this)
+
+        // Request notification permission
+        requestNotificationPermission()
 
         // Create default admin user if it does not exist
         createDefaultSuperuserAccount()
@@ -59,6 +79,22 @@ class WelcomeActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.button_sign_in).setOnClickListener {
             showProgressAndNavigate(SignInActivity::class.java)
+        }
+    }
+
+    // Check and request notification permission
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(
+                    this, android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // Request permission if not already granted
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            // Handle notification functionality for older Android versions
+            Log.w("AdminHomeFragment", "Notification permission not required for this device")
         }
     }
 
@@ -221,4 +257,5 @@ class WelcomeActivity : AppCompatActivity() {
             }
         }
     }
+
 }

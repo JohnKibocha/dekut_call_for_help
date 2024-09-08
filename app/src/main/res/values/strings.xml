@@ -24,8 +24,10 @@
     <string name="offices">Offices</string>
     <string name="requests">Requests</string>
     <string name="search">Search</string>
-    <string name="review_request">Review Request</string>
-    <string name="reject_request">Reject Request</string>
+    <string name="review_request">Review</string>
+    <string name="reject_request">Reject</string>
     <string name="channel_name">Channel Name</string>
     <string name="channel_description">Channel Description</string>
+    <string name="snooze">Snooze\n</string>
+    <string name="mark_as_read">Mark as Read</string>
 </resources>

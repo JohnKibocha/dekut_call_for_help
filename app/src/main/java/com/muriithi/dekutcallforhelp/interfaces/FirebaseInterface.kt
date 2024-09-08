@@ -47,6 +47,4 @@ interface FirebaseInterface {
     fun getAllNotifications(callback: (List<Notification>?) -> Unit)
     fun updateNotification(notification: Notification, callback: (Boolean) -> Unit)
     fun deleteNotification(notificationId: String, callback: (Boolean) -> Unit)
-    fun sendNotification(notification: Notification, callback: (Boolean) -> Unit)
-
 }

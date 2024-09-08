@@ -25,7 +25,6 @@ import com.muriithi.dekutcallforhelp.components.Component
 import com.muriithi.dekutcallforhelp.components.Formatter
 import com.muriithi.dekutcallforhelp.components.ImageRetriever
 import com.muriithi.dekutcallforhelp.components.ImageUploader
-import com.muriithi.dekutcallforhelp.components.PermissionHandler
 import com.muriithi.dekutcallforhelp.components.Validator
 import com.muriithi.dekutcallforhelp.data.FirebaseService
 import java.util.Date
@@ -43,7 +42,6 @@ class CreateAccountActivity : AppCompatActivity() {
     private lateinit var profileImageView: ShapeableImageView
     private lateinit var createAccountButton: Button
     private var profileImageUrl: String? = null
-    private lateinit var permissionHandler: PermissionHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +53,6 @@ class CreateAccountActivity : AppCompatActivity() {
         imageUploader = ImageUploader()
         profileImageView = findViewById(R.id.image_view_profile_photo)
         createAccountButton = findViewById(R.id.button_create_new_account)
-        permissionHandler = PermissionHandler(this)
 
         countryCodeDropdown =
             findViewById<TextInputLayout>(R.id.dropdown_field_country_code).editText as AutoCompleteTextView

@@ -11,7 +11,7 @@ data class Notification(
     val type: NotificationType = NotificationType.MESSAGE,
     val requestId: String = "",
     val priority: NotificationPriority = NotificationPriority.HIGH,
-    var responseStatus: notificationResponseStatus = notificationResponseStatus.PENDING
+    var responseStatus: NotificationResponseStatus = NotificationResponseStatus.PENDING
 )
 
 enum class NotificationStatus {
@@ -26,6 +26,6 @@ enum class NotificationPriority {
     HIGH, MEDIUM, LOW
 }
 
-enum class notificationResponseStatus {
+enum class NotificationResponseStatus {
     PENDING, RESPONDED
 }
