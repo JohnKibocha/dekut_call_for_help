@@ -30,4 +30,6 @@
     <string name="channel_description">Channel Description</string>
     <string name="snooze">Snooze\n</string>
     <string name="mark_as_read">Mark as Read</string>
+    <string name="search_hint">Search Help Requests</string>
+    <string name="searchbar_hint">Search Help Requests</string>
 </resources>

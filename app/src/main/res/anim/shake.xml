@@ -3,36 +3,36 @@
     <translate
         android:duration="100"
         android:fromXDelta="0%"
-        android:toXDelta="10%"
         android:repeatCount="5"
-        android:repeatMode="reverse"/>
+        android:repeatMode="reverse"
+        android:toXDelta="10%" />
     <translate
         android:duration="500"
         android:fromXDelta="0%"
-        android:toXDelta="0%"
-        android:startOffset="600"/>
+        android:startOffset="600"
+        android:toXDelta="0%" />
     <translate
         android:duration="100"
         android:fromXDelta="0%"
-        android:toXDelta="10%"
         android:repeatCount="5"
         android:repeatMode="reverse"
-        android:startOffset="1100"/>
+        android:startOffset="1100"
+        android:toXDelta="10%" />
     <translate
         android:duration="500"
         android:fromXDelta="0%"
-        android:toXDelta="0%"
-        android:startOffset="1700"/>
+        android:startOffset="1700"
+        android:toXDelta="0%" />
     <translate
         android:duration="100"
         android:fromXDelta="0%"
-        android:toXDelta="10%"
         android:repeatCount="5"
         android:repeatMode="reverse"
-        android:startOffset="2200"/>
+        android:startOffset="2200"
+        android:toXDelta="10%" />
     <translate
         android:duration="500"
         android:fromXDelta="0%"
-        android:toXDelta="0%"
-        android:startOffset="2800"/>
+        android:startOffset="2800"
+        android:toXDelta="0%" />
 </set>

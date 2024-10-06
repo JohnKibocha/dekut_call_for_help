@@ -2,19 +2,12 @@
 package com.muriithi.dekutcallforhelp
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -27,28 +20,20 @@ import com.google.firebase.database.ValueEventListener
 import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.components.Formatter
 import com.muriithi.dekutcallforhelp.components.ImageUploader
-import com.muriithi.dekutcallforhelp.data.FirebaseService
+import com.muriithi.dekutcallforhelp.databases.FirebaseService
+import com.onesignal.OneSignal
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var progressIndicator: LinearProgressIndicator
     private lateinit var firebaseService: FirebaseService
     private val formatter = Formatter()
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var imageUploader: ImageUploader
     private val database = FirebaseDatabase.getInstance()
 
-    // Define the permission request launcher
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                Log.d("AdminHomeFragment", "Notification permission granted")
-                // Send any pending notifications or proceed with your logic
-            } else {
-                Log.w("AdminHomeFragment", "Notification permission denied")
-                Toast.makeText(this, "Permission for notifications is required", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +46,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         firebaseService = FirebaseService()
         progressIndicator = findViewById(R.id.progress_indicator)
-        auth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
         imageUploader = ImageUploader()
-
-        // Request notification permission
-        requestNotificationPermission()
 
         // Create default admin user if it does not exist
         createDefaultSuperuserAccount()
@@ -79,22 +61,6 @@ class WelcomeActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.button_sign_in).setOnClickListener {
             showProgressAndNavigate(SignInActivity::class.java)
-        }
-    }
-
-    // Check and request notification permission
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ActivityCompat.checkSelfPermission(
-                    this, android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // Request permission if not already granted
-                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            }
-        } else {
-            // Handle notification functionality for older Android versions
-            Log.w("AdminHomeFragment", "Notification permission not required for this device")
         }
     }
 
@@ -115,9 +81,7 @@ class WelcomeActivity : AppCompatActivity() {
             if (user == null) {
                 progressIndicator.visibility = View.VISIBLE
                 var snackBar = Snackbar.make(
-                    findViewById(R.id.main),
-                    "Creating admin account...",
-                    Snackbar.LENGTH_SHORT
+                    findViewById(R.id.main), "Creating admin account...", Snackbar.LENGTH_SHORT
                 ).setAction("Action", null)
                 snackBar.show()
                 // Retrieve the profile photo from R.drawable.bg_default_profile_photo
@@ -131,8 +95,8 @@ class WelcomeActivity : AppCompatActivity() {
                         firebaseService.createAccount(email, password) { success ->
                             if (success) {
                                 progressIndicator.visibility = View.VISIBLE
-                                val authUser = auth.currentUser
-                                val userId = authUser?.uid
+                                val authenticateUser = firebaseAuth.currentUser
+                                val userId = authenticateUser?.uid
 
                                 if (userId != null) {
                                     val newUser = User().apply {
@@ -152,8 +116,7 @@ class WelcomeActivity : AppCompatActivity() {
                                         this.profilePhoto = profilePhoto
                                     }
                                     firebaseService.writeData(
-                                        "users/$userId",
-                                        newUser
+                                        "users/$userId", newUser
                                     ) { writeSuccess ->
                                         if (writeSuccess) {
                                             Log.d(
@@ -202,9 +165,7 @@ class WelcomeActivity : AppCompatActivity() {
                 Log.e("CreateAccountActivity", "Failed to upload profile photo")
                 progressIndicator.visibility = View.GONE
                 val snackBar = Snackbar.make(
-                    findViewById(R.id.main),
-                    "Failed to upload profile photo",
-                    Snackbar.LENGTH_SHORT
+                    findViewById(R.id.main), "Failed to upload profile photo", Snackbar.LENGTH_SHORT
                 ).setAction("Action", null)
                 snackBar.show()
             }
@@ -212,8 +173,12 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun checkIfUserIsSignedIn() {
-        val currentUser = auth.currentUser
+        val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
+
+            registerUserForOneSignalNotifications()
+
+            // Check if the user is already signed in and redirect to the main activity
             val ref = database.getReference("users").child(currentUser.uid)
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -233,6 +198,69 @@ class WelcomeActivity : AppCompatActivity() {
                     Log.w("WelcomeActivity", "Failed to read value.", error.toException())
                 }
             })
+
+        }
+    }
+
+    private fun registerUserForOneSignalNotifications() {
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+
+        if (currentUser != null) {
+            // Check if the user has a onesignal player id
+            firebaseService.getAllUsers { users ->
+                if (users != null) {
+                    for (user in users) {
+                        if (user.userId == currentUser.uid) {
+                            if (user.oneSignalPlayerId == null) {
+                                // Sign up the user for notifications
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    OneSignal.login(currentUser.uid)
+                                    Log.d(
+                                        "OneSignal - ApplicationClass",
+                                        "User logged in with OneSignal successfully"
+                                    )
+
+                                    // Get the player id of the user from OneSignal
+                                    val oneSignalPlayerId = OneSignal.User.onesignalId
+                                    Log.d(
+                                        "OneSignal - ApplicationClass",
+                                        "OneSignal Player ID: $oneSignalPlayerId"
+                                    )
+
+                                    // Check if the user is admin and tag them as such and if not tag them as a client
+                                    firebaseService.getAllUsers { users ->
+                                        if (users != null) {
+                                            for (user in users) {
+                                                if (user.userId == currentUser.uid) {
+                                                    if (user.superuser) {
+                                                        OneSignal.User.addTag("role", "admin")
+                                                    } else {
+                                                        OneSignal.User.addTag("role", "client")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // Update the user's OneSignal Player ID in the database
+                                    firebaseService.getUserById(currentUser.uid) { user ->
+                                        if (user != null) {
+                                            user.oneSignalPlayerId = oneSignalPlayerId
+                                            firebaseService.updateUser(user) {
+                                                Log.d(
+                                                    "OneSignal - ApplicationClass",
+                                                    "User's OneSignal Player ID: $oneSignalPlayerId was updated successfully"
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -244,16 +272,14 @@ class WelcomeActivity : AppCompatActivity() {
             // check if the display name is not null
             if (user.displayName != null) {
 
-                val profileUpdates = UserProfileChangeRequest.Builder()
-                    .setDisplayName(displayName)
-                    .build()
+                val profileUpdates =
+                    UserProfileChangeRequest.Builder().setDisplayName(displayName).build()
 
-                user.updateProfile(profileUpdates)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Log.d("WelcomeActivity", "User profile updated.")
-                        }
+                user.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("WelcomeActivity", "User profile updated.")
                     }
+                }
             }
         }
     }

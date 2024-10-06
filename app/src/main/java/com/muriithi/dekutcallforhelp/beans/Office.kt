@@ -4,7 +4,7 @@ package com.muriithi.dekutcallforhelp.beans
 data class Office(
     val officeId: String = "",
     val createdOn: String = "",
-    val requestId: String = "",
+    var requestId: String = "",
     val officeName: String = "",
     val officeType: officeType = com.muriithi.dekutcallforhelp.beans.officeType.GENERAL_OFFICE,
 )

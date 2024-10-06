@@ -7,7 +7,7 @@
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/top_app_bar"
+        android:id="@+id/create_account_top_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_surface"
@@ -30,7 +30,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_app_bar" />
+        app:layout_constraintTop_toBottomOf="@id/create_account_top_app_bar" />
 
     <!-- ScrollView -->
     <ScrollView
@@ -47,6 +47,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_profile_photo"
+                style="@style/CircularProfilePhoto"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
@@ -55,7 +56,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/top_app_bar"
-                style="@style/CircularProfilePhoto"
                 app:srcCompat="@drawable/ic_outlined_profile" />
 
             <!-- Form fields -->
@@ -153,14 +153,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/white"
+                android:focusable="false"
                 android:hint="Date of Birth*"
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidth="1dp"
                 app:boxStrokeWidthFocused="2dp"
-                app:endIconDrawable="@drawable/ic_outlined_calender"
+                app:endIconDrawable="@drawable/ic_outlined_calendar"
                 app:endIconMode="custom"
-                android:focusable="false"
                 app:errorEnabled="true"
                 app:helperText="Tap to select date"
                 app:helperTextTextColor="@color/black">
@@ -206,8 +206,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/white"
                     android:hint="Country Code*"
                     app:boxBackgroundColor="@color/white"

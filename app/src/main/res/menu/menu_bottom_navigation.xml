@@ -4,16 +4,14 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_outlined_home"
         android:title="@string/home" />
-    <item
-        android:id="@+id/navigation_offices"
-        android:icon="@drawable/ic_outlined_office"
-        android:title="@string/offices" />
+
     <item
         android:id="@+id/navigation_requests"
         android:icon="@drawable/ic_outlined_request"
         android:title="@string/requests" />
+
     <item
-        android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_outlined_search"
-        android:title="@string/search" />
+        android:id="@+id/navigation_offices"
+        android:icon="@drawable/ic_outlined_office"
+        android:title="@string/offices" />
 </menu>

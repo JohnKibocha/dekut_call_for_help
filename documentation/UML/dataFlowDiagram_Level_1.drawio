@@ -1,0 +1,65 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="sOhFsOultiiLgGy5gjhv">
+    <mxGraphModel dx="880" dy="524" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PN8RFSB5oN_macL_zGvx-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PN8RFSB5oN_macL_zGvx-2" target="PN8RFSB5oN_macL_zGvx-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="327" y="210" />
+              <mxPoint x="327" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-2" value="USER" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="PN8RFSB5oN_macL_zGvx-3" target="PN8RFSB5oN_macL_zGvx-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-3" value="ENTER EMERGENCY&lt;div&gt;DETAILS&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="PN8RFSB5oN_macL_zGvx-4" target="PN8RFSB5oN_macL_zGvx-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-4" value="CREATE&amp;nbsp;&lt;div&gt;EMERGENCY IN&lt;/div&gt;&lt;div&gt;FIREBASE&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="330" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PN8RFSB5oN_macL_zGvx-5" target="PN8RFSB5oN_macL_zGvx-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="327" y="600" />
+              <mxPoint x="327" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PN8RFSB5oN_macL_zGvx-5" target="PN8RFSB5oN_macL_zGvx-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="615" />
+              <mxPoint x="300" y="470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-5" value="NOTIFY USERS" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="585" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PN8RFSB5oN_macL_zGvx-6" target="PN8RFSB5oN_macL_zGvx-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="615" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-6" value="EMERGENCY&lt;div&gt;RECORDS&lt;/div&gt;" style="html=1;dashed=0;whiteSpace=wrap;shape=partialRectangle;right=0;" vertex="1" parent="1">
+          <mxGeometry x="660" y="332.5" width="160" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8RFSB5oN_macL_zGvx-7" value="ADMIN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

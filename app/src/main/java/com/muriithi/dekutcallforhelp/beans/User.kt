@@ -15,4 +15,7 @@ class User {
     var profilePhoto: String? = null
     var superuser: Boolean = false // Default value
     var countryCode: String = "254" // Default value
+    var oneSignalPlayerId: String? = null // OneSignal User ID
+    var latitude: Double? = null // Location latitude
+    var longitude: Double? = null // Location longitude
 }

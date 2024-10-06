@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -26,7 +27,11 @@ import com.muriithi.dekutcallforhelp.components.Formatter
 import com.muriithi.dekutcallforhelp.components.ImageRetriever
 import com.muriithi.dekutcallforhelp.components.ImageUploader
 import com.muriithi.dekutcallforhelp.components.Validator
-import com.muriithi.dekutcallforhelp.data.FirebaseService
+import com.muriithi.dekutcallforhelp.databases.FirebaseService
+import com.onesignal.OneSignal
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Date
 
 class CreateAccountActivity : AppCompatActivity() {
@@ -35,7 +40,7 @@ class CreateAccountActivity : AppCompatActivity() {
     private lateinit var progressIndicator: LinearProgressIndicator
     private val validator = Validator()
     private val formatter = Formatter()
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var countryCodeDropdown: AutoCompleteTextView
     private lateinit var imageRetriever: ImageRetriever
     private lateinit var imageUploader: ImageUploader
@@ -49,7 +54,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         firebaseService = FirebaseService()
         progressIndicator = findViewById(R.id.progress_indicator)
-        auth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
         imageUploader = ImageUploader()
         profileImageView = findViewById(R.id.image_view_profile_photo)
         createAccountButton = findViewById(R.id.button_create_new_account)
@@ -92,7 +97,7 @@ class CreateAccountActivity : AppCompatActivity() {
             createAccount()
         }
 
-        val topAppBar = findViewById<MaterialToolbar>(R.id.top_app_bar)
+        val topAppBar = findViewById<MaterialToolbar>(R.id.create_account_top_app_bar)
         topAppBar.setNavigationOnClickListener {
             finish()
         }
@@ -325,7 +330,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         firebaseService.createAccount(formattedEmail, password) { success ->
             if (success) {
-                var user = auth.currentUser
+                var user = firebaseAuth.currentUser
                 val userId = user?.uid
 
                 if (userId != null) {
@@ -339,7 +344,8 @@ class CreateAccountActivity : AppCompatActivity() {
                         this.idNumber = idNumber.toIntOrNull()
                         this.dateOfBirth = formatter.formatDateToString(dateOfBirth)
                         this.emailAddress = formattedEmail
-                        this.phoneNumber = formatter.stripPhoneNumberFormatting(formattedPhoneNumberWithCountryCode)
+                        this.phoneNumber =
+                            formatter.stripPhoneNumberFormatting(formattedPhoneNumberWithCountryCode)
                         this.superuser = false
                         this.countryCode = countryCode
                         this.profilePhoto = profileImageUrl
@@ -347,6 +353,9 @@ class CreateAccountActivity : AppCompatActivity() {
 
                     firebaseService.writeData("users/$userId", newUser) { writeSuccess ->
                         if (writeSuccess) {
+
+                            registerUserForOneSignalNotifications()
+
                             snackBar.setText("Account created successfully")
                                 .setDuration(Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null)
@@ -395,6 +404,68 @@ class CreateAccountActivity : AppCompatActivity() {
                 progressIndicator.visibility = View.GONE
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
+            }
+        }
+    }
+
+    private fun registerUserForOneSignalNotifications() {
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+
+        if (currentUser != null) {
+            // Check if the user has a onesignal player id
+            firebaseService.getAllUsers { users ->
+                if (users != null) {
+                    for (user in users) {
+                        if (user.userId == currentUser.uid) {
+                            if (user.oneSignalPlayerId == null) {
+                                // Sign up the user for notifications
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    OneSignal.login(currentUser.uid)
+                                    Log.d(
+                                        "OneSignal - ApplicationClass",
+                                        "User logged in with OneSignal successfully"
+                                    )
+
+                                    // Get the player id of the user from OneSignal
+                                    val oneSignalPlayerId = OneSignal.User.onesignalId
+                                    Log.d(
+                                        "OneSignal - ApplicationClass",
+                                        "OneSignal Player ID: $oneSignalPlayerId"
+                                    )
+
+                                    // Check if the user is admin and tag them as such and if not tag them as a client
+                                    firebaseService.getAllUsers { users ->
+                                        if (users != null) {
+                                            for (user in users) {
+                                                if (user.userId == currentUser.uid) {
+                                                    if (user.superuser) {
+                                                        OneSignal.User.addTag("role", "admin")
+                                                    } else {
+                                                        OneSignal.User.addTag("role", "client")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // Update the user's OneSignal Player ID in the database
+                                    firebaseService.getUserById(currentUser.uid) { user ->
+                                        if (user != null) {
+                                            user.oneSignalPlayerId = oneSignalPlayerId
+                                            firebaseService.updateUser(user) {
+                                                Log.d(
+                                                    "OneSignal - ApplicationClass",
+                                                    "User's OneSignal Player ID: $oneSignalPlayerId was updated successfully"
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

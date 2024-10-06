@@ -1,7 +1,6 @@
 package com.muriithi.dekutcallforhelp.interfaces
 
 import com.muriithi.dekutcallforhelp.beans.HelpRequest
-import com.muriithi.dekutcallforhelp.beans.Notification
 import com.muriithi.dekutcallforhelp.beans.Office
 import com.muriithi.dekutcallforhelp.beans.User
 
@@ -36,15 +35,9 @@ interface FirebaseInterface {
     // Office management methods
     fun createOffice(office: Office, callback: (Boolean) -> Unit)
     fun getOfficeById(officeId: String, callback: (Office?) -> Unit)
+    fun getOfficeNameById(officeId: String, callback: (String) -> Unit)
     fun getOfficeByType(officeType: String, callback: (Office?) -> Unit)
     fun getAllOffices(callback: (List<Office>?) -> Unit)
     fun updateOffice(office: Office, callback: (Boolean) -> Unit)
     fun deleteOffice(officeId: String, callback: (Boolean) -> Unit)
-
-    // Notification methods
-    fun createNotification(notification: Notification, callback: (Boolean) -> Unit)
-    fun getNotificationById(notificationId: String, callback: (Notification?) -> Unit)
-    fun getAllNotifications(callback: (List<Notification>?) -> Unit)
-    fun updateNotification(notification: Notification, callback: (Boolean) -> Unit)
-    fun deleteNotification(notificationId: String, callback: (Boolean) -> Unit)
 }

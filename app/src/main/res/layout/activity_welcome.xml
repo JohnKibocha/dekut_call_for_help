@@ -9,7 +9,7 @@
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/top_app_bar"
+        android:id="@+id/welcome_top_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_surface"
@@ -31,7 +31,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_app_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome_top_app_bar" />
 
     <!-- Logo at the center -->
     <ImageView
@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linear_layout_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_app_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
 

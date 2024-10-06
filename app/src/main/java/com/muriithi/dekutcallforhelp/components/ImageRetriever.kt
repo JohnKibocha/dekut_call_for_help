@@ -18,11 +18,14 @@ class ImageRetriever(private val component: Component) {
 
     private val getImage = when (component) {
         is Component.FragmentComponent -> (component.fragment as ActivityResultCaller).registerForActivityResult(
-            ActivityResultContracts.GetContent()) { uri: Uri? ->
+            ActivityResultContracts.GetContent()
+        ) { uri: Uri? ->
             imageUriCallback?.invoke(uri)
         }
+
         is Component.ActivityComponent -> (component.activity as ActivityResultCaller).registerForActivityResult(
-            ActivityResultContracts.GetContent()) { uri: Uri? ->
+            ActivityResultContracts.GetContent()
+        ) { uri: Uri? ->
             imageUriCallback?.invoke(uri)
         }
     }

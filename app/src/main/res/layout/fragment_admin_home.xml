@@ -7,7 +7,7 @@
 
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/top_app_bar"
+        android:id="@+id/admin_top_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_surface"
@@ -15,9 +15,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_top_app_bar"
         app:titleCentered="true"
-        app:titleTextColor="@color/black" />
+        app:titleTextColor="@color/black">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_filled_account" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_indicator"
@@ -28,7 +36,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_app_bar" />
+        app:layout_constraintTop_toBottomOf="@id/admin_top_app_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,7 +78,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_received_call"
+                            android:src="@drawable/ic_filled_received_call"
                             app:tint="@color/material_green" />
 
                         <TextView
@@ -115,7 +123,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_missed_call"
+                            android:src="@drawable/ic_filled_missed_call"
                             app:tint="@color/material_red_dark" />
 
                         <TextView
@@ -230,8 +238,8 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
-                            android:src="@drawable/ic_filled_rating_star"
-                            app:tint="@color/material_yellow_darker" />
+                            android:src="@drawable/ic_outlined_rating_star"
+                            app:tint="@color/material_blue_darker" />
 
                         <TextView
                             android:id="@+id/office_rating_metric"
