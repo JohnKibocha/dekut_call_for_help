@@ -80,7 +80,6 @@ class AdminHomeFragment : Fragment() {
         val topOfficesCard = dashboard.findViewById<MaterialCardView>(R.id.card_top_offices)
         val topOfficesRatingCard =
             dashboard.findViewById<MaterialCardView>(R.id.card_top_offices_rating)
-        val recentRequestsList = dashboard.findViewById<ViewGroup>(R.id.list_recent_requests)
 
         // Set dummy data
         emergencyHandledCard.findViewById<MaterialTextView>(R.id.emergency_handled_metric).text =
@@ -92,35 +91,5 @@ class AdminHomeFragment : Fragment() {
         topOfficesRatingCard.findViewById<MaterialTextView>(R.id.office_rating_metric).text = "4.5"
         topOfficesRatingCard.findViewById<MaterialTextView>(R.id.top_rated_office).text =
             "Security Office"
-
-        // Populate recent requests list with dummy data
-        for (i in 1..5) {
-            val requestView = LayoutInflater.from(context)
-                .inflate(R.layout.item_recent_request, recentRequestsList, false)
-            requestView.findViewById<MaterialTextView>(R.id.client).text = "User $i"
-            requestView.findViewById<MaterialTextView>(R.id.date_time).text = "2023-10-01 12:00"
-
-            val responseIcon = requestView.findViewById<ImageView>(R.id.display_response_icon)
-            val statusIcon = requestView.findViewById<ImageView>(R.id.display_status_icon)
-
-            if (i % 2 == 0) {
-                requestView.findViewById<MaterialTextView>(R.id.response_value).text = "Accepted"
-                requestView.findViewById<MaterialTextView>(R.id.status_value).text = "Resolved"
-
-                responseIcon.setImageResource(R.drawable.ic_filled_received_call)
-                responseIcon.setColorFilter(Color.parseColor("#2E7D32")) // Green
-                statusIcon.setImageResource(R.drawable.ic_filled_checkmark)
-                statusIcon.setColorFilter(Color.parseColor("#2E7D32")) // Green
-            } else {
-                requestView.findViewById<MaterialTextView>(R.id.response_value).text = "Cancelled"
-                requestView.findViewById<MaterialTextView>(R.id.status_value).text = "Rejected"
-                responseIcon.setImageResource(R.drawable.ic_filled_missed_call)
-                responseIcon.setColorFilter(Color.parseColor("#C62828")) // Dark Red
-                statusIcon.setImageResource(R.drawable.ic_filled_close)
-                statusIcon.setColorFilter(Color.parseColor("#C62828")) // Dark Red
-            }
-
-            recentRequestsList.addView(requestView)
-        }
     }
 }

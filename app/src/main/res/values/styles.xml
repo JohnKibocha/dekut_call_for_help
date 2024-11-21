@@ -32,4 +32,11 @@
         <item name="trackThickness">4dp</item>
         <item name="android:indeterminate">true</item>
     </style>
+
+    <style name="Widget.MaterialRatingBar.RatingBar" parent="Widget.AppCompat.RatingBar">
+    <item name="android:minHeight">36dp</item>
+    <item name="android:maxHeight">36dp</item>
+    <item name="android:progressDrawable">@drawable/ic_filled_rating_star</item>
+    <item name="android:indeterminateDrawable">@drawable/ic_outlined_rating_star</item>
+</style>
 </resources>

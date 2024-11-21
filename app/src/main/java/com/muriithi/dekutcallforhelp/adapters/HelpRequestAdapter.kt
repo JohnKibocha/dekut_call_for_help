@@ -4,10 +4,13 @@ package com.muriithi.dekutcallforhelp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.muriithi.dekutcallforhelp.R
+import com.muriithi.dekutcallforhelp.RateServiceBottomSheet
 import com.muriithi.dekutcallforhelp.beans.HelpRequest
 import com.muriithi.dekutcallforhelp.beans.RequestResponse
 import com.muriithi.dekutcallforhelp.beans.RequestStatus
@@ -193,7 +196,24 @@ class HelpRequestAdapter(
             }
 
             helpRequestBinding.linearLayoutRateOffice.setOnClickListener {
-                // TODO: Implement Rating Feature Later
+    val activity = it.context as AppCompatActivity
+
+    firebaseService.getRatingById(helpRequest.requestId) { rating ->
+        if (rating != null) {
+            Toast.makeText(
+                activity,
+                "You have already rated this request",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            val bottomSheet = RateServiceBottomSheet.newInstance(
+                currentUserId,
+                helpRequest.requestId,
+                helpRequest.officeId
+            )
+            bottomSheet.show(activity.supportFragmentManager, "RateServiceBottomSheet")
+        }
+    }
             }
 
             // Expand/Collapse functionality
