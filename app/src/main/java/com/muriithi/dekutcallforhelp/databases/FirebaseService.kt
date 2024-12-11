@@ -2,6 +2,7 @@ package com.muriithi.dekutcallforhelp.databases
 
 import com.muriithi.dekutcallforhelp.beans.HelpRequest
 import com.muriithi.dekutcallforhelp.beans.Office
+import com.muriithi.dekutcallforhelp.beans.Rating
 import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.interfaces.FirebaseInterface
 
@@ -119,4 +120,24 @@ class FirebaseService : FirebaseInterface {
     }
 
 
+    // Rating management methods
+    override fun saveRating(rating: Rating, callback: (Boolean) -> Unit) {
+        firebaseDatabase.saveRating(rating, callback)
+    }
+
+    override fun getRatingById(ratingId: String, callback: (Rating?) -> Unit) {
+        firebaseDatabase.getRatingById(ratingId, callback)
+    }
+
+    override fun getRatingsByOfficeId(officeId: String, callback: (List<Rating>) -> Unit) {
+        firebaseDatabase.getRatingsByOfficeId(officeId, callback)
+    }
+
+    override fun getHelpRequestsByOfficeId(officeId: String, callback: (List<HelpRequest>) -> Unit) {
+        firebaseDatabase.getHelpRequestsByOfficeId(officeId, callback)
+    }
+
+    override fun getHelpRequestsSince(timestamp: Long, callback: (List<HelpRequest>) -> Unit) {
+        firebaseDatabase.getHelpRequestsSince(timestamp, callback)
+    }
 }

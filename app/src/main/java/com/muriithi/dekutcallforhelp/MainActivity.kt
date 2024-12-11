@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var locationManager: LocationManager
 
+    val currentUserId: String?
+        get() = FirebaseAuth.getInstance().currentUser?.uid
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

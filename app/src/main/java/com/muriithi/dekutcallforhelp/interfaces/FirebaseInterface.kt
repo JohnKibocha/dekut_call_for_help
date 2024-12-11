@@ -2,6 +2,7 @@ package com.muriithi.dekutcallforhelp.interfaces
 
 import com.muriithi.dekutcallforhelp.beans.HelpRequest
 import com.muriithi.dekutcallforhelp.beans.Office
+import com.muriithi.dekutcallforhelp.beans.Rating
 import com.muriithi.dekutcallforhelp.beans.User
 
 interface FirebaseInterface {
@@ -40,4 +41,11 @@ interface FirebaseInterface {
     fun getAllOffices(callback: (List<Office>?) -> Unit)
     fun updateOffice(office: Office, callback: (Boolean) -> Unit)
     fun deleteOffice(officeId: String, callback: (Boolean) -> Unit)
+
+    // Rating management methods
+    fun saveRating(rating: Rating, callback: (Boolean) -> Unit)
+    fun getRatingById(ratingId: String, callback: (Rating?) -> Unit)
+    fun getRatingsByOfficeId(officeId: String, callback: (List<Rating>) -> Unit)
+    fun getHelpRequestsByOfficeId(officeId: String, callback: (List<HelpRequest>) -> Unit)
+    fun getHelpRequestsSince(timestamp: Long, callback: (List<HelpRequest>) -> Unit)
 }

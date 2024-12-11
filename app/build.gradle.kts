@@ -82,5 +82,9 @@ dependencies {
 
     // OkHttp for logging network requests (optional but useful for debugging)
     implementation(libs.logging.interceptor)
+
+    //Fragment.ktx for viewModels
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
+    implementation ("me.zhanghai.android.materialratingbar:library:1.4.0")
 }
 
