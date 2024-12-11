@@ -1,3 +1,4 @@
+// app/src/main/java/com/muriithi/dekutcallforhelp/CreateAccountActivity.kt
 package com.muriithi.dekutcallforhelp
 
 import android.annotation.SuppressLint
@@ -19,14 +20,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.muriithi.dekutcallforhelp.beans.User
 import com.muriithi.dekutcallforhelp.components.Component
 import com.muriithi.dekutcallforhelp.components.Formatter
 import com.muriithi.dekutcallforhelp.components.ImageRetriever
 import com.muriithi.dekutcallforhelp.components.ImageUploader
-import com.muriithi.dekutcallforhelp.components.PermissionHandler
 import com.muriithi.dekutcallforhelp.components.Validator
-import com.muriithi.dekutcallforhelp.data.FirebaseService
+import com.muriithi.dekutcallforhelp.databases.FirebaseService
+import com.onesignal.OneSignal
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Date
 
 class CreateAccountActivity : AppCompatActivity() {
@@ -35,14 +40,13 @@ class CreateAccountActivity : AppCompatActivity() {
     private lateinit var progressIndicator: LinearProgressIndicator
     private val validator = Validator()
     private val formatter = Formatter()
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var countryCodeDropdown: AutoCompleteTextView
     private lateinit var imageRetriever: ImageRetriever
     private lateinit var imageUploader: ImageUploader
     private lateinit var profileImageView: ShapeableImageView
     private lateinit var createAccountButton: Button
     private var profileImageUrl: String? = null
-    private lateinit var permissionHandler: PermissionHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +54,10 @@ class CreateAccountActivity : AppCompatActivity() {
 
         firebaseService = FirebaseService()
         progressIndicator = findViewById(R.id.progress_indicator)
-        auth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
         imageUploader = ImageUploader()
         profileImageView = findViewById(R.id.image_view_profile_photo)
         createAccountButton = findViewById(R.id.button_create_new_account)
-        permissionHandler = PermissionHandler(this)
 
         countryCodeDropdown =
             findViewById<TextInputLayout>(R.id.dropdown_field_country_code).editText as AutoCompleteTextView
@@ -90,13 +93,11 @@ class CreateAccountActivity : AppCompatActivity() {
             countryCodeDropdown.setText(defaultCountryCode, false)
         }
 
-        createDefaultSuperuserAccount()
-
         createAccountButton.setOnClickListener {
             createAccount()
         }
 
-        val topAppBar = findViewById<MaterialToolbar>(R.id.top_app_bar)
+        val topAppBar = findViewById<MaterialToolbar>(R.id.create_account_top_app_bar)
         topAppBar.setNavigationOnClickListener {
             finish()
         }
@@ -130,10 +131,12 @@ class CreateAccountActivity : AppCompatActivity() {
                 profileImageView.setImageURI(uri)
                 snackBar.setText("Profile photo uploaded successfully")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
             } else {
                 snackBar.setText("Failed to upload profile photo")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
             }
             createAccountButton.isEnabled = true
@@ -142,60 +145,6 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun createDefaultSuperuserAccount() {
-        val email = "muriithi.admin@dkut.ac.ke"
-        val password = "defaultPassword" // Use a secure password in production
-        val dateOfBirth = formatter.parseStringToDateObject("01-Jan-2000 10:14")
-        Log.w("CreateAccountActivity", "Date of birth: $dateOfBirth")
-
-        firebaseService.createAccount(email, password) { success ->
-            if (success) {
-                progressIndicator.visibility = View.VISIBLE
-                val user = auth.currentUser
-                val userId = user?.uid
-
-                if (userId != null) {
-                    val newUser = User().apply {
-                        this.userId = userId
-                        this.firstName = "Dennis"
-                        this.lastName = "Muriithi"
-                        this.course = "Not Applicable"
-                        this.school = "Not Applicable"
-                        this.registrationNumber = "A000-01-0000/0000"
-                        this.idNumber = 12345678
-                        this.dateOfBirth = formatter.formatDateToString(dateOfBirth)
-                        Log.w(
-                            "CreateAccountActivity",
-                            "Formatted date of birth: ${this.dateOfBirth}"
-                        )
-                        this.emailAddress = email
-                        this.phoneNumber = formatter.stripPhoneNumberFormatting("+254712345678")
-                        this.countryCode = "254"
-                        this.isSuperuser = true
-                    }
-                    firebaseService.writeData("users/$userId", newUser) { writeSuccess ->
-                        if (writeSuccess) {
-                            Log.d(
-                                "CreateAccountActivity",
-                                "Superuser account created successfully for userId: $userId"
-                            )
-                            progressIndicator.visibility = View.GONE
-                        } else {
-                            Log.e(
-                                "CreateAccountActivity",
-                                "Failed to create superuser account for userId: $userId"
-                            )
-                            progressIndicator.visibility = View.GONE
-                        }
-                    }
-                }
-            } else {
-                Log.e("CreateAccountActivity", "Failed to create default superuser account")
-                progressIndicator.visibility = View.GONE
-            }
-        }
-    }
 
     @SuppressLint("CutPasteId")
     private fun createAccount() {
@@ -381,7 +330,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         firebaseService.createAccount(formattedEmail, password) { success ->
             if (success) {
-                val user = auth.currentUser
+                var user = firebaseAuth.currentUser
                 val userId = user?.uid
 
                 if (userId != null) {
@@ -395,36 +344,128 @@ class CreateAccountActivity : AppCompatActivity() {
                         this.idNumber = idNumber.toIntOrNull()
                         this.dateOfBirth = formatter.formatDateToString(dateOfBirth)
                         this.emailAddress = formattedEmail
-                        this.phoneNumber = formattedPhoneNumberWithCountryCode
-                        this.isSuperuser = false
+                        this.phoneNumber =
+                            formatter.stripPhoneNumberFormatting(formattedPhoneNumberWithCountryCode)
+                        this.superuser = false
                         this.countryCode = countryCode
                         this.profilePhoto = profileImageUrl
                     }
 
                     firebaseService.writeData("users/$userId", newUser) { writeSuccess ->
                         if (writeSuccess) {
+
+                            registerUserForOneSignalNotifications()
+
                             snackBar.setText("Account created successfully")
                                 .setDuration(Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null)
                                 .show()
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         } else {
                             snackBar.setText("Failed to save user data to database")
                                 .setDuration(Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null)
                                 .show()
                             startActivity(Intent(this, WelcomeActivity::class.java))
                             finish()
                         }
                         progressIndicator.visibility = View.GONE
                     }
+
+                    user = FirebaseAuth.getInstance().currentUser
+
+                    // Check if the user object is not null
+                    user?.let {
+                        // check if display name is null
+                        if (user.displayName == null) {
+                            val profileUpdates = UserProfileChangeRequest.Builder()
+                                .setDisplayName("$formattedFirstName $formattedLastName")
+                                .build()
+
+                            user.updateProfile(profileUpdates)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(
+                                            this,
+                                            "${user.displayName} profile updated successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                        }
+                    }
                 }
             } else {
                 snackBar.setText("Failed to create account")
                     .setDuration(Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
                     .show()
                 progressIndicator.visibility = View.GONE
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
+            }
+        }
+    }
+
+    private fun registerUserForOneSignalNotifications() {
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+
+        if (currentUser != null) {
+            // Check if the user has a onesignal player id
+            firebaseService.getAllUsers { users ->
+                if (users != null) {
+                    for (user in users) {
+                        if (user.userId == currentUser.uid) {
+                            if (user.oneSignalPlayerId == null) {
+                                // Sign up the user for notifications
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    OneSignal.login(currentUser.uid)
+                                    Log.d(
+                                        "OneSignal - ApplicationClass",
+                                        "User logged in with OneSignal successfully"
+                                    )
+
+                                    // Get the player id of the user from OneSignal
+                                    val oneSignalPlayerId = OneSignal.User.onesignalId
+                                    Log.d(
+                                        "OneSignal - ApplicationClass",
+                                        "OneSignal Player ID: $oneSignalPlayerId"
+                                    )
+
+                                    // Check if the user is admin and tag them as such and if not tag them as a client
+                                    firebaseService.getAllUsers { users ->
+                                        if (users != null) {
+                                            for (user in users) {
+                                                if (user.userId == currentUser.uid) {
+                                                    if (user.superuser) {
+                                                        OneSignal.User.addTag("role", "admin")
+                                                    } else {
+                                                        OneSignal.User.addTag("role", "client")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // Update the user's OneSignal Player ID in the database
+                                    firebaseService.getUserById(currentUser.uid) { user ->
+                                        if (user != null) {
+                                            user.oneSignalPlayerId = oneSignalPlayerId
+                                            firebaseService.updateUser(user) {
+                                                Log.d(
+                                                    "OneSignal - ApplicationClass",
+                                                    "User's OneSignal Player ID: $oneSignalPlayerId was updated successfully"
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

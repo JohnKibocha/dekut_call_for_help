@@ -11,12 +11,16 @@
         tools:ignore="SelectedPhotoAccess" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
         android:name="android.permission.CAMERA"
         tools:ignore="SelectedPhotoAccess" />
 
     <application
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -26,6 +30,24 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.DekutCallForHelp"
         tools:targetApi="31">
+        <activity
+            android:name=".MapView"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_outline_uread_chat_bubble" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />
+
+        <activity
+            android:name=".AdminReviewRequestActivity"
+            android:exported="false" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false" />
@@ -43,12 +65,10 @@
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:exported="true" />
-
+            android:exported="true" /> <!-- Services -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 
 </manifest>

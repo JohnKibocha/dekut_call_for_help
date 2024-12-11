@@ -11,6 +11,7 @@ import java.util.Locale
 class Formatter {
 
     private val dateFormat = SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.getDefault())
+
     /**
      * Formats a Date object to a string in the format dd-MMM-yyyy HH:mm.
      * @example "01-Jan-2021 21:14"
@@ -37,13 +38,15 @@ class Formatter {
 
     /**
      * Formats a name string to capitalize the first letter and lowercase the rest.
+     * The first letter of each word is capitalized.
      *
      * @param name The name string to format.
      * @return The formatted name string.
      * @example "John Doe"
      */
     fun formatName(name: String?): String {
-        return name?.lowercase()?.replaceFirstChar { it.uppercase() } ?: ""
+        return name?.split(" ")
+            ?.joinToString(" ") { it.lowercase().replaceFirstChar { it.uppercase() } } ?: ""
     }
 
     /**
@@ -55,7 +58,8 @@ class Formatter {
      * @example "John Doe"
      */
     fun formatText(text: String?): String {
-        return text?.split(" ")?.joinToString(" ") { it.lowercase().replaceFirstChar { it.uppercase() } } ?: ""
+        return text?.split(" ")
+            ?.joinToString(" ") { it.lowercase().replaceFirstChar { it.uppercase() } } ?: ""
     }
 
     /**

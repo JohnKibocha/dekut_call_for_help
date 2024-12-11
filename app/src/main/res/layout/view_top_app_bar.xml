@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_surface"
-        app:navigationIcon="@drawable/ic_filled_back_arrow"
-        app:titleCentered="true"
+        android:fitsSystemWindows="true"
         app:menu="@menu/menu_top_app_bar"
-        android:fitsSystemWindows="true" />
+        app:navigationIcon="@drawable/ic_filled_back_arrow"
+        app:titleCentered="true" />
 
 </com.google.android.material.appbar.AppBarLayout>

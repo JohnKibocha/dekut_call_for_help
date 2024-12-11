@@ -38,10 +38,14 @@
     <color name="material_error_dark">#B71C1C</color> <!-- Dark error red -->
 
     <!-- Material 3 Colors - Background & Surface -->
-    <color name="material_surface">#F5F5F5</color> <!-- Light gray [for cards, sheets and other UIs that sit on top of the background] -->
-    <color name="material_background">#E0E0E0</color> <!-- Light Background gray [for the main background of the app] -->
-    <color name="material_surface_dark">#212121</color> <!-- Dark gray [for cards, sheets and other UIs that sit on top of the background] -->
-    <color name="material_background_dark">#121212</color> <!-- Dark background [for the main background of the app] -->
+    <color name="material_surface">#F5F5F5
+    </color> <!-- Light gray [for cards, sheets and other UIs that sit on top of the background] -->
+    <color name="material_background">#E0E0E0
+    </color> <!-- Light Background gray [for the main background of the app] -->
+    <color name="material_surface_dark">#212121
+    </color> <!-- Dark gray [for cards, sheets and other UIs that sit on top of the background] -->
+    <color name="material_background_dark">#121212
+    </color> <!-- Dark background [for the main background of the app] -->
 
     <!-- Additional Material 3 Colors - Pink -->
     <color name="material_pink_light">#F8BBD0</color> <!-- Light pink -->
