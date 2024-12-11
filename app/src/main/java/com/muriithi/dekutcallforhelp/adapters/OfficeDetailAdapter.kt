@@ -25,12 +25,14 @@ class OfficeDetailAdapter(private val details: List<OfficeDetail>) :
     override fun getItemCount(): Int = details.size
 
     inner class OfficeDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val visitorTextView: TextView = itemView.findViewById(R.id.visitor)
         private val visitDateTextView: TextView = itemView.findViewById(R.id.visit_date)
         private val officerTextView: TextView = itemView.findViewById(R.id.officer)
         private val ratingTextView: TextView = itemView.findViewById(R.id.rating)
         private val statusTextView: TextView = itemView.findViewById(R.id.status)
 
         fun bind(detail: OfficeDetail) {
+            visitorTextView.text = detail.visitor
             visitDateTextView.text = detail.visitDate
             officerTextView.text = detail.officer
             ratingTextView.text = detail.rating.toString()

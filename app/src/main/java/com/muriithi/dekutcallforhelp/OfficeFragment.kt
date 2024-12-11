@@ -66,10 +66,15 @@ class OfficeFragment : Fragment() {
                 Log.d("OfficeFragment", "Fetched user: $user")
 
                 val officeData = offices.map { office ->
-                    val filteredRequests = helpRequests.filter { it.officeId == office.officeId }
+                    val filteredRequests = helpRequests.filter { request ->
+                        val senderIdMatches = request.senderId == currentUserId
+                        val isSuperUser = user?.superuser == true
+                        (senderIdMatches || isSuperUser) && request.officeId == office.officeId
+                    }
                     val officeDetails = filteredRequests.map { request ->
                         val rating = getRatingByRequestId(request.requestId) ?: Rating()
                         OfficeDetail(
+                            visitor = request.senderName,
                             visitDate = request.requestDate,
                             officer = request.receiverName,
                             rating = rating.requestRating.toDouble(),
