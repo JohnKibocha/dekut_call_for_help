@@ -1,3 +1,4 @@
+// app/src/main/java/com/muriithi/dekutcallforhelp/interfaces/FirebaseInterface.kt
 package com.muriithi.dekutcallforhelp.interfaces
 
 interface FirebaseInterface {

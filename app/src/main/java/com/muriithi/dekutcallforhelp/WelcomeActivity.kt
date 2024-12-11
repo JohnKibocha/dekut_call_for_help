@@ -1,14 +1,17 @@
+// app/src/main/java/com/muriithi/dekutcallforhelp/WelcomeActivity.kt
 package com.muriithi.dekutcallforhelp
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.muriithi.dekutcallforhelp.components.Formatter
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var progressIndicator: LinearProgressIndicator

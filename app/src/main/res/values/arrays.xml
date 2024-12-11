@@ -1,0 +1,100 @@
+<resources>
+    <string-array name="country_codes">
+        <item>+1 (US)</item>
+        <item>+44 (GB)</item>
+        <item>+91 (IN)</item>
+        <item>+254 (KE)</item>
+        <item>+61 (AU)</item>
+        <item>+81 (JP)</item>
+        <item>+49 (DE)</item>
+        <item>+33 (FR)</item>
+        <item>+55 (BR)</item>
+        <item>+27 (ZA)</item>
+        <item>+86 (CN)</item>
+        <item>+7 (RU)</item>
+        <item>+34 (ES)</item>
+        <item>+39 (IT)</item>
+        <item>+52 (MX)</item>
+        <item>+82 (KR)</item>
+        <item>+31 (NL)</item>
+        <item>+46 (SE)</item>
+        <item>+41 (CH)</item>
+        <item>+47 (NO)</item>
+        <item>+48 (PL)</item>
+        <item>+32 (BE)</item>
+        <item>+45 (DK)</item>
+        <item>+351 (PT)</item>
+        <item>+353 (IE)</item>
+        <item>+358 (FI)</item>
+        <item>+64 (NZ)</item>
+        <item>+63 (PH)</item>
+        <item>+60 (MY)</item>
+        <item>+65 (SG)</item>
+        <item>+66 (TH)</item>
+        <item>+62 (ID)</item>
+        <item>+90 (TR)</item>
+        <item>+20 (EG)</item>
+        <item>+212 (MA)</item>
+        <item>+234 (NG)</item>
+        <item>+256 (UG)</item>
+        <item>+255 (TZ)</item>
+        <item>+251 (ET)</item>
+        <item>+233 (GH)</item>
+        <item>+221 (SN)</item>
+        <item>+213 (DZ)</item>
+        <item>+216 (TN)</item>
+        <item>+218 (LY)</item>
+        <item>+249 (SD)</item>
+        <item>+258 (MZ)</item>
+        <item>+260 (ZM)</item>
+        <item>+263 (ZW)</item>
+        <item>+267 (BW)</item>
+        <item>+265 (MW)</item>
+        <item>+264 (NA)</item>
+        <item>+250 (RW)</item>
+        <item>+252 (SO)</item>
+        <item>+253 (DJ)</item>
+        <item>+261 (MG)</item>
+        <item>+262 (RE)</item>
+        <item>+266 (LS)</item>
+        <item>+268 (SZ)</item>
+        <item>+269 (KM)</item>
+    </string-array>
+
+    <string-array name="courses">
+        <item>Information Technology</item>
+        <item>Computer Science</item>
+        <item>Software Engineering</item>
+        <item>Business Information Technology</item>
+        <item>Finance</item>
+        <item>Accounting</item>
+        <item>Marketing</item>
+        <item>Human Resource Management</item>
+        <item>Procurement and Supply Chain Management</item>
+        <item>Project Management</item>
+        <item>Nursing</item>
+        <item>Medicine</item>
+        <item>Pharmacy</item>
+        <item>Public Health</item>
+        <item>Mechanical Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Civil Engineering</item>
+        <item>Architecture</item>
+        <item>Law</item>
+        <item>International Relations</item>
+        <item>Political Science</item>
+        <item>Psychology</item>
+        <item>History</item>
+        <item>Philosophy</item>
+        <item>English Literature</item>
+    </string-array>
+
+    <string-array name="schools">
+        <item>Computer Science and Information Technology</item>
+        <item>Business and Management</item>
+        <item>Engineering</item>
+        <item>Health and Medicine</item>
+        <item>Humanities</item>
+        <item>Law</item>
+    </string-array>
+</resources>

@@ -4,6 +4,19 @@ package com.muriithi.dekutcallforhelp.components
 class Validator {
 
     /**
+     * Validates a field based on whether it is null or empty.
+     * @param field The field to validate.
+     * @return `true` if the field is not null or empty, `false` otherwise.
+     * @throws IllegalArgumentException if the field is null or empty.
+     */
+    fun validateField(field: String?): Boolean {
+        if (field.isNullOrEmpty()) {
+            throw IllegalArgumentException("Field cannot be null or empty")
+        }
+        return true
+    }
+
+    /**
      * Validates an email string based on specific criteria.
      *
      * @param email The email string to validate.
@@ -65,5 +78,19 @@ class Validator {
             throw IllegalArgumentException("ID number cannot be null or empty")
         }
         return idNumber.length in 7..15
+    }
+
+    /**
+     * Validates password and confirm password strings match.
+     * @param password The password string to validate.
+     * @param confirmPassword The confirm password string to validate.
+     * @return `true` if the password and confirm password strings match, `false` otherwise.
+     * @throws IllegalArgumentException if the password or confirm password is null or empty.
+     */
+    fun validatePassword(password: String?, confirmPassword: String?): Boolean {
+        if (password.isNullOrEmpty() || confirmPassword.isNullOrEmpty()) {
+            throw IllegalArgumentException("Password and confirm password cannot be null or empty")
+        }
+        return password == confirmPassword
     }
 }

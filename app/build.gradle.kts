@@ -7,7 +7,6 @@ plugins {
 }
 
 
-
 android {
     namespace = "com.muriithi.dekutcallforhelp"
     compileSdk = 34
@@ -40,7 +39,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -55,16 +53,14 @@ dependencies {
 
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))
-
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
     implementation(libs.firebase.analytics)
 
-    // Add Material 3 support
+    // Add Material 3 support and other dependencies
     implementation(libs.material.v150alpha01)
-
     implementation(libs.picasso)
-    implementation("com.vanniktech:android-image-cropper:4.5.0")
 
+    // Add the Image Cropper library
+    implementation(libs.android.image.cropper)
+    // Add the Glide library
+    implementation(libs.glide)
 }
